@@ -1,19 +1,19 @@
 <?php
 
 class Lib_Util_Logger {
-    const RUNTIME_LEVEL_FATAL     = 0x01;
-    const RUNTIME_LEVEL_ERROR     = 0x02;
-    const RUNTIME_LEVEL_WARNING   = 0x03;
-    const RUNTIME_LEVEL_INFO      = 0x04;
-    const RUNTIME_LEVEL_DEBUG     = 0x05;
+    const FATAL     = 0x01;
+    const ERROR     = 0x02;
+    const WARNING   = 0x03;
+    const INFO      = 0x04;
+    const DEBUG     = 0x05;
 
     static private $_runtimeDir     = '/tmp/runtime';
     static private $_actionDir      = '/tmp/action';
     static private $_payDir         = '/tmp/pay';
 
-    static private $_runtimeLevel   = self::RUNTIME_LEVEL_DEBUG;
+    static private $_runtimeLevel   = self::DEBUG;
 
-    static public function init($runtimeDir, $actionDir, $payDir, $runtimeLevel = self::RUNTIME_LEVEL_DEBUG) {
+    static public function init($runtimeDir, $actionDir, $payDir, $runtimeLevel = self::DEBUG) {
         self::$_runtimeDir      = $runtimeDir;
         self::$_actionDir       = $actionDir;
         self::$_payDir          = $payDir;
@@ -21,19 +21,23 @@ class Lib_Util_Logger {
         self::$_runtimeLevel    = $runtimeLevel;
     }
 
-    static public function runtime($uid, $msg, $level = self::RUNTIME_LEVEL_DEBUG) {
+    static public function runtime($uid, $msg, $level = self::DEBUG) {
+        if ($level > self::$_runtimeLevel) {
+            return;
+        }
+
         $data = '[' . date('Y-m-d H:i:s') . '][';
         switch($level){
-            case self::RUNTIME_LEVEL_FATAL:
+            case self::FATAL:
                 $data .= 'FATAL';
                 break;
-            case self::RUNTIME_LEVEL_ERROR:
+            case self::ERROR:
                 $data .= 'ERROR';
                 break;
-            case self::RUNTIME_LEVEL_WARNING:
+            case self::WARNING:
                 $data .= 'WARNING';
                 break;
-            case self::RUNTIME_LEVEL_INFO:
+            case self::INFO:
                 $data .= 'INFO';
                 break;
             default:
