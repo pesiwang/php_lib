@@ -63,7 +63,7 @@ class Lib_Util_Logger {
         $data = '[' . date('Y-m-d H:i:s') . '][' . $uid . ']';
         self::_formatMsg($msg);
         $data .= $msg . "\n";
-        self::_write(self::$_runtimeDir, 'pay', $data, true);
+        self::_write(self::$_payDir, 'pay', $data, true);
     }
 
     static private function _formatMsg(&$msg){
