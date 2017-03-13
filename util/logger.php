@@ -61,7 +61,6 @@ class Lib_Util_Logger {
 
     static public function pay($uid, $msg) {
         $data = '[' . date('Y-m-d H:i:s') . '][' . $uid . ']';
-        self::_formatMsg($msg);
         $data .= $msg . "\n";
         self::_write(self::$_payDir, 'pay', $data, true);
     }
